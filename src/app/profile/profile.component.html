@@ -1,19 +1,85 @@
-<div class="container mx-auto">
+<div class="container mx-auto pt-20">
   <div class="grid grid-cols-8 gap-6">
-    <div class="col-span-2">
-      <img class="rounded-full" [src]="profile.avatar_url" alt="Profile Pic" />
+    <div class="col-span-2 text-center justify-center">
+      <img
+        class="rounded-full w-1/3 mx-auto"
+        [src]="profile.avatar_url"
+        alt="Profile Pic"
+      />
       <div class="text-center">
         <h1>{{ profile.name }}</h1>
         <span>{{ profile.login }}</span>
         <p>{{ profile.bio }}</p>
+        <div>
+          <p>
+            {{ profile.followers }} followers ·
+            {{ profile.following }} following
+          </p>
+        </div>
+        <span
+          ><mat-icon matSuffix>location_on</mat-icon>
+          {{
+            profile.location === null
+              ? "Location not available"
+              : profile.location
+          }}</span
+        >
       </div>
     </div>
     <div class="col-span-6">
       <div class="border-b py-6 px-4" *ngFor="let item of repos">
-        <p>{{ item.full_name }}</p>
-        <span>{{ item.stargazers_count }},</span>
-        <span>{{ item.watchers_count }},</span>
-        <span>{{ item.forks_count }}</span>
+        <div class="flex flex-row justify-between items-center">
+          <div>
+            <p class="text-xl">{{ item.full_name }}</p>
+            <p>Language: {{ item.language }}</p>
+            <p>Size: {{ item.size }}kb</p>
+            <p>
+              Description:
+              {{
+                item.description === null
+                  ? "Description is not available for this project"
+                  : item.description
+              }}
+            </p>
+          </div>
+          <div class="flex flex-row">
+            <div class="items-center justify-center flex flex-row mr-3">
+              <div>
+                <mat-icon matSuffix>star_rate</mat-icon>
+                <span class="font-semibold ml-2">{{
+                  item.stargazers_count
+                }}</span>
+              </div>
+              <div>
+                <mat-icon matSuffix>visibility</mat-icon>
+                <span class="font-semibold ml-2">{{
+                  item.watchers_count
+                }}</span>
+              </div>
+              <div>
+                <mat-icon matSuffix>call_split</mat-icon>
+                <span class="font-semibold ml-2">{{ item.forks_count }}</span>
+              </div>
+            </div>
+            <button
+              mat-button
+              class="outline-none focus:outline-none"
+              [matMenuTriggerFor]="menu"
+            >
+              Clone or Download
+            </button>
+            <mat-menu #menu="matMenu">
+              <button
+                (click)="copyToClipboard(item.clone_url)"
+                class="outline-none focus:outline-none"
+                mat-menu-item
+              >
+                <mat-icon>content_paste</mat-icon>
+                <span>{{ item.clone_url }}</span>
+              </button>
+            </mat-menu>
+          </div>
+        </div>
       </div>
     </div>
   </div>

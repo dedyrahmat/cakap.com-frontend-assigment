@@ -28,4 +28,13 @@ export class ProfileComponent implements OnInit {
     })
   }
 
+  copyToClipboard(url: string) {
+    var textArea = document.createElement("textarea");
+    textArea.value = url;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand("Copy");
+    textArea.remove();
+  }
+
 }
