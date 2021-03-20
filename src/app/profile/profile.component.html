@@ -1,0 +1,20 @@
+<div class="container mx-auto">
+  <div class="grid grid-cols-8 gap-6">
+    <div class="col-span-2">
+      <img class="rounded-full" [src]="profile.avatar_url" alt="Profile Pic" />
+      <div class="text-center">
+        <h1>{{ profile.name }}</h1>
+        <span>{{ profile.login }}</span>
+        <p>{{ profile.bio }}</p>
+      </div>
+    </div>
+    <div class="col-span-6">
+      <div class="border-b py-6 px-4" *ngFor="let item of repos">
+        <p>{{ item.full_name }}</p>
+        <span>{{ item.stargazers_count }},</span>
+        <span>{{ item.watchers_count }},</span>
+        <span>{{ item.forks_count }}</span>
+      </div>
+    </div>
+  </div>
+</div>
